@@ -1,20 +1,18 @@
-import { useRouter } from 'expo-router';
 import { useLoginMutation, useRegisterMutation } from '@/services/queries/auth';
+import { useAuth } from '@/contexts/AuthContext';
 import { LoginCredentials, RegisterCredentials } from '@/types/auth';
 
 export const useAuthController = () => {
-  const router = useRouter();
+  const auth = useAuth();
   const loginMutation = useLoginMutation();
   const registerMutation = useRegisterMutation();
 
   const handleLogin = async (credentials: LoginCredentials) => {
     try {
       const response = await loginMutation.mutateAsync(credentials);
-      // TODO: Store token and user data
-      // TODO: Update global auth state
-      router.replace('/(tabs)');
+      auth.signIn(response.accessToken, response.user);
+      // Navigation handled by AuthContext
     } catch (error) {
-      // For now, we'll just rethrow the error
       throw error;
     }
   };
@@ -22,9 +20,8 @@ export const useAuthController = () => {
   const handleRegister = async (credentials: RegisterCredentials) => {
     try {
       const response = await registerMutation.mutateAsync(credentials);
-      // TODO: Store token and user data
-      // TODO: Update global auth state
-      router.replace('/(tabs)');
+      auth.signIn(response.accessToken, response.user);
+      // Navigation handled by AuthContext
     } catch (error) {
       throw error;
     }
