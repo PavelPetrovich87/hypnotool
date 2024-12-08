@@ -7,9 +7,11 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { setLastTab } = useAuth();
 
   return (
     <Tabs
@@ -25,6 +27,13 @@ export default function TabLayout() {
           },
           default: {},
         }),
+      }}
+      screenListeners={{
+        state: (e) => {
+          const state = e.data.state;
+          const currentRoute = state.routes[state.index].name;
+          setLastTab(currentRoute);
+        },
       }}>
       <Tabs.Screen
         name="index"
