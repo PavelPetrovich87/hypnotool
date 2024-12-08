@@ -5,12 +5,13 @@ import api from '../api/client';
 // Login mutation function
 const loginUser = async (credentials: LoginCredentials): Promise<AuthResponse> => {
   const response = await api.post<AuthResponse>('/auth/login', credentials);
-  return response.data;
+  const { user, accessToken } = response;
+  return {user, accessToken};
 };
 
 // Login mutation hook
 export const useLoginMutation = () => {
-  return useMutation({
+  return useMutation<AuthResponse, Error, LoginCredentials>({
     mutationFn: loginUser,
   });
 };
@@ -18,12 +19,13 @@ export const useLoginMutation = () => {
 // Register mutation function
 const registerUser = async (credentials: RegisterCredentials): Promise<AuthResponse> => {
   const response = await api.post<AuthResponse>('/auth/register', credentials);
-  return response.data;
+  const { user, accessToken } = response;
+  return {user, accessToken};
 };
 
 // Register mutation hook
 export const useRegisterMutation = () => {
-  return useMutation({
+  return useMutation<AuthResponse, Error, RegisterCredentials>({
     mutationFn: registerUser,
   });
 }; 

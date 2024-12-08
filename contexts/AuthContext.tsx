@@ -23,7 +23,7 @@ type ValidTabRoute = keyof typeof VALID_TAB_ROUTES;
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthenticatedUser | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [lastTab, setLastTab] = useState<string | null>(null);
   
   const segments = useSegments();
