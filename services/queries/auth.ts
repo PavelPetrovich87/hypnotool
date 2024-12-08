@@ -5,7 +5,7 @@ import api from '../api/client';
 // Login mutation function
 const loginUser = async (credentials: LoginCredentials): Promise<AuthResponse> => {
   const response = await api.post<AuthResponse>('/auth/login', credentials);
-  const { user, accessToken } = response;
+  const { user, accessToken } = response as unknown as AuthResponse;
   return {user, accessToken};
 };
 
@@ -19,7 +19,7 @@ export const useLoginMutation = () => {
 // Register mutation function
 const registerUser = async (credentials: RegisterCredentials): Promise<AuthResponse> => {
   const response = await api.post<AuthResponse>('/auth/register', credentials);
-  const { user, accessToken } = response;
+  const { user, accessToken } = response as unknown as AuthResponse;;
   return {user, accessToken};
 };
 

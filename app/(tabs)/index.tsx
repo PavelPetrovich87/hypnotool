@@ -1,74 +1,127 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, Platform, Animated } from 'react-native';
+import { useEffect, useRef } from 'react';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import ParallaxScrollView from '@/components/ParallaxScrollView';
 
 export default function HomeScreen() {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: '#6366F1', dark: '#4338CA' }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          source={require('@/assets/images/hypnotool-logo.jpg')}
+          style={styles.logo}
         />
       }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
+      <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">Hypnotool</ThemedText>
+          <ThemedText type="subtitle" style={styles.tagline}>
+            Design your change, guide your growth
+          </ThemedText>
+        </ThemedView>
+
+        <ThemedView style={styles.messageContainer}>
+          <ThemedText type="defaultSemiBold" style={styles.messageHeading}>
+            Your Personal Journey
+          </ThemedText>
+          <ThemedText style={styles.messageText}>
+            Your journey to self-improvement is unique, and your self-hypnosis practice should be too. 
+            Whether you're aiming for better sleep, increased confidence, new habits, or personal growth, 
+            Hypnotool helps you design sessions that match your style, pace, and specific goals.
+          </ThemedText>
+        </ThemedView>
+
+        <ThemedView style={styles.benefitsContainer}>
+          <ThemedText type="subtitle">Key Benefits</ThemedText>
+          <ThemedView style={styles.benefitCard}>
+            <ThemedText type="defaultSemiBold">Better Sleep Quality</ThemedText>
+            <ThemedText>Train your mind to release daily tension and establish natural sleep patterns.</ThemedText>
+          </ThemedView>
+          <ThemedView style={styles.benefitCard}>
+            <ThemedText type="defaultSemiBold">Increased Confidence</ThemedText>
+            <ThemedText>Build lasting self-assurance through guided mental practice.</ThemedText>
+          </ThemedView>
+        </ThemedView>
+
+        <ThemedView style={styles.safetyContainer}>
+          <ThemedText type="subtitle">Safety First</ThemedText>
+          <ThemedText style={styles.safetyText}>
+            • Self-hypnosis is safe when practiced as guided{'\n'}
+            • Stay in a comfortable, quiet environment{'\n'}
+            • Never practice while driving or operating machinery{'\n'}
+            • Consult healthcare provider if under treatment
+          </ThemedText>
+        </ThemedView>
+      </Animated.View>
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  logo: {
+    height: 120,
+    width: 120,
+    bottom: 20,
+    alignSelf: 'center',
+    position: 'absolute',
+  },
   titleContainer: {
-    flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+    marginBottom: 24,
   },
-  stepContainer: {
-    gap: 8,
+  tagline: {
+    textAlign: 'center',
+    opacity: 0.8,
+  },
+  messageContainer: {
+    backgroundColor: Platform.select({ ios: 'rgba(255,255,255,0.1)', android: 'transparent' }),
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 24,
+  },
+  messageHeading: {
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  messageText: {
+    lineHeight: 22,
+  },
+  benefitsContainer: {
+    gap: 16,
+    marginBottom: 24,
+  },
+  benefitCard: {
+    padding: 16,
+    borderRadius: 12,
+    backgroundColor: Platform.select({ ios: 'rgba(255,255,255,0.05)', android: 'transparent' }),
+    borderWidth: 1,
+    borderColor: 'rgba(99, 102, 241, 0.2)',
+  },
+  safetyContainer: {
+    padding: 16,
+    borderRadius: 12,
+    backgroundColor: Platform.select({ ios: 'rgba(251, 191, 36, 0.1)', android: 'transparent' }),
+    marginBottom: 24,
+  },
+  safetyText: {
+    marginTop: 8,
+    lineHeight: 22,
   },
 });
