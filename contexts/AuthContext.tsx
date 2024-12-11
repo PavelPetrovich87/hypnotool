@@ -14,9 +14,12 @@ interface AuthContextType extends AuthState {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const VALID_TAB_ROUTES = {
-  index: '/(tabs)',
-  explore: '/(tabs)/explore',
+  index: '',
+  suggestionsList: '/suggestions/list',
+  createSuggestion: '/suggestions/create',
 } as const;
+
+
 
 type ValidTabRoute = keyof typeof VALID_TAB_ROUTES;
 

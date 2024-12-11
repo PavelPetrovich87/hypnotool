@@ -1,11 +1,13 @@
-import { Image, StyleSheet, Platform, Animated } from 'react-native';
+import { Image, StyleSheet, Platform, Animated, Pressable } from 'react-native';
 import { useEffect, useRef } from 'react';
+import { useRouter } from 'expo-router';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 
 export default function HomeScreen() {
+  const router = useRouter();
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -15,6 +17,10 @@ export default function HomeScreen() {
       useNativeDriver: true,
     }).start();
   }, []);
+
+  const handleStart = () => {
+    router.push('/suggestions/list');
+  };
 
   return (
     <ParallaxScrollView
@@ -64,6 +70,20 @@ export default function HomeScreen() {
             • Never practice while driving or operating machinery{'\n'}
             • Consult healthcare provider if under treatment
           </ThemedText>
+        </ThemedView>
+
+        <ThemedView style={styles.buttonContainer}>
+          <Pressable
+            style={({ pressed }) => [
+              styles.button,
+              pressed && styles.buttonPressed
+            ]}
+            onPress={handleStart}
+          >
+            <ThemedText style={styles.buttonText}>
+              Let's Start
+            </ThemedText>
+          </Pressable>
         </ThemedView>
       </Animated.View>
     </ParallaxScrollView>
@@ -123,5 +143,26 @@ const styles = StyleSheet.create({
   safetyText: {
     marginTop: 8,
     lineHeight: 22,
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    marginVertical: 24,
+  },
+  button: {
+    backgroundColor: '#6366F1',
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    borderRadius: 25,
+    minWidth: 200,
+    alignItems: 'center',
+  },
+  buttonPressed: {
+    opacity: 0.8,
+    transform: [{ scale: 0.98 }],
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '600',
   },
 });
