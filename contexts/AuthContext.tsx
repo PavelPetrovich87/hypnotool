@@ -44,7 +44,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const route = lastTab && lastTab in VALID_TAB_ROUTES 
         ? VALID_TAB_ROUTES[lastTab as ValidTabRoute]
         : VALID_TAB_ROUTES.index;
-      
+      // @ts-ignore
       router.replace(route);
     }
   }, [accessToken, segments, loading, lastTab]);

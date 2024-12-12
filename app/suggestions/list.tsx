@@ -28,7 +28,7 @@ export default function ListScreen() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
-            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.title}>{item.id}</Text>
           </View>
         )}
       />
