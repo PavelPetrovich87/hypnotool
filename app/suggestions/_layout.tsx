@@ -15,6 +15,7 @@ export default function SuggestionsLayout() {
         options={{
           title: 'Create New',
           tabBarLabel: 'Create',
+          href: '/suggestions/create',
         }}
       />
     </Tabs>
