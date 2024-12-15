@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useCreateSuggestion } from '../../../../../contexts/CreateSuggestionContext';
@@ -14,6 +14,12 @@ const WorkingPhaseStep: React.FC = () => {
   const { data } = formState;
 
   const techniques = data.workingPhase?.techniques || [];
+
+  useEffect(() => {
+    if (techniques.length === 0) {
+      addTechnique();
+    }
+  }, []);
 
   const addTechnique = () => {
     updateFormData({
