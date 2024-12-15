@@ -6,6 +6,7 @@ import { FORM_STEPS } from '../../../../types/suggestions/form';
 import GoalStep from './steps/GoalStep';
 import InductionStep from './steps/InductionStep';
 import DeepeningStep from './steps/DeepeningStep';
+import WorkingPhaseStep from './steps/WorkingPhaseStep';
 import StepNavigation from './StepNavigation';
 
 const StepWrapper: React.FC = () => {
@@ -33,6 +34,8 @@ const StepWrapper: React.FC = () => {
         return <InductionStep />;
       case 'deepening':
         return <DeepeningStep />;
+      case 'working':
+        return <WorkingPhaseStep />;
       default:
         return null;
     }
