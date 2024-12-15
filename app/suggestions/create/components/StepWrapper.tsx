@@ -4,6 +4,9 @@ import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import { useCreateSuggestion } from '../../../../contexts/CreateSuggestionContext';
 import { FORM_STEPS } from '../../../../types/suggestions/form';
 import GoalStep from './steps/GoalStep';
+import InductionStep from './steps/InductionStep';
+import DeepeningStep from './steps/DeepeningStep';
+import StepNavigation from './StepNavigation';
 
 const StepWrapper: React.FC = () => {
   const { formState, setCurrentStep } = useCreateSuggestion();
@@ -26,6 +29,10 @@ const StepWrapper: React.FC = () => {
     switch (formState.currentStep) {
       case 'goal':
         return <GoalStep />;
+      case 'induction':
+        return <InductionStep />;
+      case 'deepening':
+        return <DeepeningStep />;
       default:
         return null;
     }
@@ -34,7 +41,10 @@ const StepWrapper: React.FC = () => {
   return (
     <GestureDetector gesture={swipeGesture}>
       <View style={styles.container}>
-        {renderStep()}
+        <View style={styles.content}>
+          {renderStep()}
+        </View>
+        <StepNavigation />
       </View>
     </GestureDetector>
   );
@@ -44,6 +54,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
+  },
+  content: {
+    flex: 1,
   },
 });
 
