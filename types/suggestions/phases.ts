@@ -1,4 +1,5 @@
-import { InductionTechnique, DeepeningMethod, EmergenceTechnique, Technique } from './base';
+import { InductionTechnique, DeepeningMethod, EmergenceTechnique, Technique, IntegrationMethod } from './base';
+import { IntegrationConfiguration } from './integrations';
 
 /**
  * Represents the induction phase of a hypnosis session
@@ -27,8 +28,8 @@ export interface WorkingPhase {
  * Represents the integration phase where changes are reinforced
  */
 export interface Integration {
-  mentalRehearsals?: string[];
-  postHypnoticSuggestions: string[];
+  method: IntegrationMethod;
+  configuration: IntegrationConfiguration;
 }
 
 /**

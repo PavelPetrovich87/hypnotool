@@ -32,4 +32,6 @@ export interface Technique {
   name: string;
   affirmations?: string[];
   visualizations?: string[];
-} 
+}
+
+export type IntegrationMethod = 'future_pacing' | 'rehearsal' | 'anchoring' | 'symbolic_bridge';

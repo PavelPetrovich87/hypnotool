@@ -7,6 +7,7 @@ import GoalStep from './steps/GoalStep';
 import InductionStep from './steps/InductionStep';
 import DeepeningStep from './steps/DeepeningStep';
 import WorkingPhaseStep from './steps/WorkingPhaseStep';
+import IntegrationStep from './steps/IntegrationStep';
 import StepNavigation from './StepNavigation';
 
 const StepWrapper: React.FC = () => {
@@ -36,6 +37,8 @@ const StepWrapper: React.FC = () => {
         return <DeepeningStep />;
       case 'working':
         return <WorkingPhaseStep />;
+      case 'integration':
+        return <IntegrationStep />;
       default:
         return null;
     }
