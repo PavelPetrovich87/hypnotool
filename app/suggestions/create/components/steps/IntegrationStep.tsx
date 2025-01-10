@@ -5,7 +5,7 @@ import { useCreateSuggestion } from '../../../../../contexts/CreateSuggestionCon
 import { IntegrationMethod } from '@/types/suggestions/base';
 import FuturePacingSection from './integration/FuturePacingSection';
 import RehearsalSection from './integration/RehearsalSection';
-import { IntegrationConfiguration } from '@/types/suggestions/integrations';
+import { FuturePacingConfiguration, IntegrationConfiguration, RehearsalConfiguration } from '@/types/suggestions/integrations';
 
 const INTEGRATION_METHODS = [
   { 
@@ -31,6 +31,20 @@ const DURATION_OPTIONS = Array.from({ length: 5 }, (_, i) => ({
   value: i + 3,
 }));
 
+const createDefaultRehearsalConfig = (duration: number): RehearsalConfiguration => ({
+  type: 'rehearsal',
+  duration,
+  scenarios: {
+    practiceLocation: '',
+    simple: { setting: '', description: '', response: '' },
+    moderate: { setting: '', description: '', response: '' },
+    challenging: { setting: '', description: '', response: '' },
+  },
+  anchor: {
+    type: 'thumb_middle_finger',
+  },
+});
+
 const IntegrationStep: React.FC = () => {
   const { formState, updateFormData } = useCreateSuggestion();
   const { data } = formState;
@@ -47,18 +61,8 @@ const IntegrationStep: React.FC = () => {
           timeframes: [],
         };
         break;
-      case 'rehearsal':
-        configuration = {
-          type: 'rehearsal',
-          duration: data.integration?.configuration?.duration || 5,
-        };
-        break;
-      // Add other cases as needed
       default:
-        configuration = {
-          type: 'rehearsal',
-          duration: data.integration?.configuration?.duration || 5,
-        };
+        configuration = createDefaultRehearsalConfig(data.integration?.configuration?.duration || 5);
     }
 
     updateFormData({
@@ -83,10 +87,7 @@ const IntegrationStep: React.FC = () => {
         };
         break;
       default:
-        configuration = {
-          type: method,
-          duration: value,
-        };
+        configuration = createDefaultRehearsalConfig(value);
     }
 
     updateFormData({
