@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useCreateSuggestion } from '../../../../../contexts/CreateSuggestionContext';
+import { InductionTechnique } from '@/types/suggestions/base';
 
 const INDUCTION_TECHNIQUES = [
   { label: 'Progressive Relaxation', value: 'progressive_relaxation' },
@@ -22,7 +23,8 @@ const InductionStep: React.FC = () => {
     updateFormData({
       induction: {
         ...data.induction,
-        technique: value,
+        technique: value as InductionTechnique,
+        duration: data.induction?.duration || 5,
       },
     });
   };
@@ -31,10 +33,8 @@ const InductionStep: React.FC = () => {
     updateFormData({
       induction: {
         ...data.induction,
-        configuration: {
-          ...data.induction?.configuration,
-          duration: value,
-        },
+        duration: value,
+        technique: data.induction?.technique || 'progressive_relaxation',
       },
     });
   };
@@ -61,7 +61,7 @@ const InductionStep: React.FC = () => {
           data={DURATION_OPTIONS}
           labelField="label"
           valueField="value"
-          value={data.induction?.configuration?.duration}
+          value={DURATION_OPTIONS.find(opt => opt.value === data.induction?.duration)}
           onChange={item => handleDurationChange(item.value)}
           placeholder="Select duration"
         />

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useCreateSuggestion } from '../../../../../contexts/CreateSuggestionContext';
+import { DeepeningMethod } from '@/types/suggestions/base';
 
 const DEEPENING_TECHNIQUES = [
   { label: 'Countdown', value: 'countdown' },
@@ -23,7 +24,8 @@ const DeepeningStep: React.FC = () => {
     updateFormData({
       deepening: {
         ...data.deepening,
-        technique: value,
+        method: value as DeepeningMethod,
+        duration: data.deepening?.duration || 5,
       },
     });
   };
@@ -32,10 +34,8 @@ const DeepeningStep: React.FC = () => {
     updateFormData({
       deepening: {
         ...data.deepening,
-        configuration: {
-          ...data.deepening?.configuration,
-          duration: value,
-        },
+        method: data.deepening?.method || 'countdown',
+        duration: value,
       },
     });
   };
@@ -49,7 +49,7 @@ const DeepeningStep: React.FC = () => {
           data={DEEPENING_TECHNIQUES}
           labelField="label"
           valueField="value"
-          value={data.deepening?.technique}
+          value={data.deepening?.method}
           onChange={item => handleTechniqueChange(item.value)}
           placeholder="Select technique"
         />
@@ -62,7 +62,7 @@ const DeepeningStep: React.FC = () => {
           data={DURATION_OPTIONS}
           labelField="label"
           valueField="value"
-          value={data.deepening?.configuration?.duration}
+          value={DURATION_OPTIONS.find(opt => opt.value === data.deepening?.duration)}
           onChange={item => handleDurationChange(item.value)}
           placeholder="Select duration"
         />

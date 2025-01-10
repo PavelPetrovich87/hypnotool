@@ -61,6 +61,9 @@ const IntegrationStep: React.FC = () => {
           timeframes: [],
         };
         break;
+      case 'rehearsal':
+        configuration = createDefaultRehearsalConfig(data.integration?.configuration?.duration || 5);
+        break;
       default:
         configuration = createDefaultRehearsalConfig(data.integration?.configuration?.duration || 5);
     }

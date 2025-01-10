@@ -35,6 +35,7 @@ const WorkingPhaseStep: React.FC = () => {
             visualizations: [],
           }
         ],
+        suggestionsUsed: data.workingPhase?.suggestionsUsed || [],
       },
     });
   };
@@ -44,6 +45,7 @@ const WorkingPhaseStep: React.FC = () => {
       workingPhase: {
         ...data.workingPhase,
         techniques: techniques.filter(t => t.id !== id),
+        suggestionsUsed: data.workingPhase?.suggestionsUsed || [],
       },
     });
   };
@@ -67,6 +69,7 @@ const WorkingPhaseStep: React.FC = () => {
                     workingPhase: {
                       ...data.workingPhase,
                       techniques: updatedTechniques,
+                      suggestionsUsed: data.workingPhase?.suggestionsUsed || [],
                     },
                   });
                 }}
@@ -87,7 +90,7 @@ const WorkingPhaseStep: React.FC = () => {
                 data={DURATION_OPTIONS}
                 labelField="label"
                 valueField="value"
-                value={technique.duration}
+                value={DURATION_OPTIONS.find(opt => opt.value === technique.duration)}
                 onChange={item => {
                   const updatedTechniques = [...techniques];
                   updatedTechniques[index] = {
@@ -98,6 +101,7 @@ const WorkingPhaseStep: React.FC = () => {
                     workingPhase: {
                       ...data.workingPhase,
                       techniques: updatedTechniques,
+                      suggestionsUsed: data.workingPhase?.suggestionsUsed || [],
                     },
                   });
                 }}
@@ -107,7 +111,7 @@ const WorkingPhaseStep: React.FC = () => {
 
             <TextArrayInput
               label="Affirmations"
-              values={technique.affirmations}
+              values={technique.affirmations || []}
               onChange={(newValues) => {
                 const updatedTechniques = [...techniques];
                 updatedTechniques[index] = {
@@ -118,6 +122,7 @@ const WorkingPhaseStep: React.FC = () => {
                   workingPhase: {
                     ...data.workingPhase,
                     techniques: updatedTechniques,
+                    suggestionsUsed: data.workingPhase?.suggestionsUsed || [],
                   },
                 });
               }}
@@ -126,7 +131,7 @@ const WorkingPhaseStep: React.FC = () => {
 
             <TextArrayInput
               label="Visualizations"
-              values={technique.visualizations}
+              values={technique.visualizations || []}
               onChange={(newValues) => {
                 const updatedTechniques = [...techniques];
                 updatedTechniques[index] = {
@@ -137,6 +142,7 @@ const WorkingPhaseStep: React.FC = () => {
                   workingPhase: {
                     ...data.workingPhase,
                     techniques: updatedTechniques,
+                    suggestionsUsed: data.workingPhase?.suggestionsUsed || [],
                   },
                 });
               }}

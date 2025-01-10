@@ -6,6 +6,7 @@ import { IntegrationConfiguration } from './integrations';
  */
 export interface Induction {
   technique: InductionTechnique;
+  duration: number;
 }
 
 /**
@@ -14,6 +15,7 @@ export interface Induction {
 export interface Deepening {
   method: DeepeningMethod;
   visualizationDetails?: string;
+  duration: number;
 }
 
 /**

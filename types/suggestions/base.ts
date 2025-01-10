@@ -29,9 +29,11 @@ export interface Goal {
  * Represents a specific technique used during the working phase
  */
 export interface Technique {
+  id: string;
   name: string;
   affirmations?: string[];
   visualizations?: string[];
+  duration: number;
 }
 
 export type IntegrationMethod = 'future_pacing' | 'rehearsal' | 'anchoring' | 'symbolic_bridge';
