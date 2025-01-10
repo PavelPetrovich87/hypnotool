@@ -61,6 +61,7 @@ const FuturePacingTimeframe: React.FC<Props> = ({ timeframe, onUpdate, onDelete 
             onChangeText={(value) => updateField('situation', value)}
             placeholder="Name this situation"
           />
+          <Text style={styles.helperText}>A specific moment where you'll apply your new changes</Text>
         </View>
 
         <View style={styles.field}>
@@ -84,6 +85,7 @@ const FuturePacingTimeframe: React.FC<Props> = ({ timeframe, onUpdate, onDelete 
             onChangeText={(value) => updateField('location', value)}
             placeholder="Where will this happen?"
           />
+          <Text style={styles.helperText}>Choose a real place where you'll practice this change</Text>
         </View>
 
         <View style={styles.field}>
@@ -94,6 +96,7 @@ const FuturePacingTimeframe: React.FC<Props> = ({ timeframe, onUpdate, onDelete 
             onChangeText={(value) => updateField('participants', value.split(',').map(p => p.trim()))}
             placeholder="Who will be there? (separate with commas)"
           />
+          <Text style={styles.helperText}>Include key people who might influence this situation</Text>
         </View>
 
         <View style={styles.field}>
@@ -104,6 +107,7 @@ const FuturePacingTimeframe: React.FC<Props> = ({ timeframe, onUpdate, onDelete 
             onChangeText={(value) => updateField('purpose', value)}
             placeholder="What's the purpose of this situation?"
           />
+          <Text style={styles.helperText}>Define your intention for this specific moment</Text>
         </View>
       </View>
 
@@ -217,6 +221,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     backgroundColor: '#FFF',
+  },
+  helperText: {
+    fontSize: 12,
+    color: '#666',
+    fontStyle: 'italic',
+    marginTop: 2,
   },
 });
 

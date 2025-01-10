@@ -4,7 +4,8 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { useCreateSuggestion } from '../../../../../contexts/CreateSuggestionContext';
 import { IntegrationMethod } from '@/types/suggestions/base';
 import FuturePacingSection from './integration/FuturePacingSection';
-import { FuturePacingConfiguration, IntegrationConfiguration } from '@/types/suggestions/integrations';
+import RehearsalSection from './integration/RehearsalSection';
+import { IntegrationConfiguration } from '@/types/suggestions/integrations';
 
 const INTEGRATION_METHODS = [
   { 
@@ -101,7 +102,8 @@ const IntegrationStep: React.FC = () => {
     switch (data.integration?.method) {
       case 'future_pacing':
         return <FuturePacingSection />;
-      // other cases will be added later
+      case 'rehearsal':
+        return <RehearsalSection />;
       default:
         return null;
     }
