@@ -1,4 +1,4 @@
-import { InductionTechnique, DeepeningMethod, EmergenceTechnique, Technique, IntegrationMethod } from './base';
+import { InductionTechnique, DeepeningMethod, EmergencePace, EmergenceFocus, EnergyState, Technique, IntegrationMethod, Emergence as BaseEmergence } from './base';
 import { IntegrationConfiguration } from './integrations';
 
 /**
@@ -38,5 +38,9 @@ export interface Integration {
  * Represents the emergence phase for ending the session
  */
 export interface Emergence {
-  technique: EmergenceTechnique;
+  pace: EmergencePace;
+  focus: EmergenceFocus;
+  energyState: EnergyState;
+  nextActivity?: string;
+  duration?: number;
 } 

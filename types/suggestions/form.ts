@@ -1,4 +1,6 @@
 import { CreateSessionDto } from './dto';
+import { Emergence, Deepening, Integration, WorkingPhase } from './phases';
+import { Induction } from './phases';
 
 export type FormStep = 
   | 'goal'
@@ -31,3 +33,15 @@ export const FORM_STEPS: StepConfig[] = [
   { id: 'emergence', title: 'Emergence' },
   { id: 'review', title: 'Review' },
 ]; 
+
+export interface SuggestionFormState {
+  data: {
+    induction?: Induction;
+    deepening?: Deepening;
+    workingPhase?: WorkingPhase;
+    integration?: Integration;
+    emergence?: Emergence;
+  };
+  currentStep: number;
+  isComplete: boolean;
+} 
