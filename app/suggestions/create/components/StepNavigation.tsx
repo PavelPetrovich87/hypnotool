@@ -4,7 +4,7 @@ import { useCreateSuggestion } from '../../../../contexts/CreateSuggestionContex
 import { FORM_STEPS } from '../../../../types/suggestions/form';
 
 const StepNavigation: React.FC = () => {
-  const { formState, setCurrentStep } = useCreateSuggestion();
+  const { formState, setCurrentStep, isSubmitting } = useCreateSuggestion();
   const currentIndex = FORM_STEPS.findIndex(step => step.id === formState.currentStep);
   
   const handleNext = () => {
@@ -21,13 +21,13 @@ const StepNavigation: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {currentIndex > 0 && (
+      {currentIndex > 0 && !isSubmitting && (
         <TouchableOpacity style={styles.button} onPress={handleBack}>
           <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
       )}
       
-      {currentIndex < FORM_STEPS.length - 1 && (
+      {currentIndex < FORM_STEPS.length - 1 && !isSubmitting && (
         <TouchableOpacity style={[styles.button, styles.nextButton]} onPress={handleNext}>
           <Text style={[styles.buttonText, styles.nextButtonText]}>Next</Text>
         </TouchableOpacity>

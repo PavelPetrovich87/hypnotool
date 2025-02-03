@@ -19,15 +19,6 @@ export type EmergencePace = 'gradual' | 'balanced' | 'quick';
 export type EmergenceFocus = 'body' | 'count' | 'environment';
 export type EnergyState = 'calm' | 'alert' | 'balanced';
 
-/**
- * Configuration for the emergence phase
- */
-export interface Emergence {
-  pace: EmergencePace;
-  focus: EmergenceFocus;
-  energyState: EnergyState;
-  nextActivity?: string;
-}
 
 /**
  * Represents the goal of a hypnosis session

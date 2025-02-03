@@ -1,4 +1,4 @@
-import { InductionTechnique, DeepeningMethod, EmergencePace, EmergenceFocus, EnergyState, Technique, IntegrationMethod, Emergence as BaseEmergence } from './base';
+import { InductionTechnique, DeepeningMethod, EmergencePace, EmergenceFocus, EnergyState, Technique, IntegrationMethod } from './base';
 import { IntegrationConfiguration } from './integrations';
 
 /**

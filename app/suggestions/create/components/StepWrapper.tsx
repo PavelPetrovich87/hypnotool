@@ -10,6 +10,7 @@ import WorkingPhaseStep from './steps/WorkingPhaseStep';
 import IntegrationStep from './steps/IntegrationStep';
 import StepNavigation from './StepNavigation';
 import EmergenceStep from './steps/EmergenceStep';
+import ReviewStep from './steps/ReviewStep';
 
 const StepWrapper: React.FC = () => {
   const { formState, setCurrentStep } = useCreateSuggestion();
@@ -42,6 +43,8 @@ const StepWrapper: React.FC = () => {
         return <IntegrationStep />;
       case 'emergence':
         return <EmergenceStep />;
+      case 'review':
+        return <ReviewStep />;
       default:
         return null;
     }

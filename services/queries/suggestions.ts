@@ -16,12 +16,13 @@ export const suggestionKeys = {
   details: () => [...suggestionKeys.all, 'detail'] as const,
   detail: (id: string) => [...suggestionKeys.details(), id] as const,
 };
-
+  
 // Queries
 export const useGetSessions = () => {
   return useQuery({
     queryKey: suggestionKeys.lists(),
-    queryFn: () => suggestionsApi.getSessions()
+    queryFn: () => suggestionsApi.getSessions().then(res => res),
+    // Add if using pagination: structuralSharing: (old, new) => ({...new, data: [...new.data]})
   });
 };
 
@@ -38,25 +39,31 @@ export const useCreateSession = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: (data: CreateSessionDto) => suggestionsApi.createSession(data),
+    mutationFn: (data: CreateSessionDto) => {
+      // Add any necessary data transformations
+      return suggestionsApi.createSession({
+        ...data,
+        duration: data.duration || 30, // default duration
+        tags: data.tags || [],
+      });
+    },
     onMutate: async (newSession) => {
-      // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey: suggestionKeys.lists() });
 
-      // Get current sessions
-      const previousSessions = queryClient.getQueryData<SessionsResponse>(suggestionKeys.lists());
-
-      // Optimistically update sessions list
+      // Get current sessions as array
+      const previousSessions = queryClient.getQueryData<Session[]>(suggestionKeys.lists());
+      
+      // Optimistically update with temporary session
       if (previousSessions) {
-        queryClient.setQueryData<SessionsResponse>(suggestionKeys.lists(), {
+        queryClient.setQueryData<Session[]>(suggestionKeys.lists(), [
           ...previousSessions,
-          data: [...previousSessions.data, {
+          {
             ...newSession,
             id: 'temp-id-' + Date.now(),
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString()
-          } as Session]
-        });
+          }
+        ]);
       }
 
       return { previousSessions };
@@ -126,14 +133,11 @@ export const useDeleteSession = () => {
       await queryClient.cancelQueries({ queryKey: suggestionKeys.lists() });
 
       // Snapshot current sessions
-      const previousSessions = queryClient.getQueryData<SessionsResponse>(suggestionKeys.lists());
-
+      const previousSessions = queryClient.getQueryData<Session[]>(suggestionKeys.lists());
+      console.log('previousSessions', previousSessions);
       // Optimistically remove session
       if (previousSessions) {
-        queryClient.setQueryData<SessionsResponse>(suggestionKeys.lists(), {
-          ...previousSessions,
-          data: previousSessions.data.filter(session => session.id !== id)
-        });
+        queryClient.setQueryData<Session[]>(suggestionKeys.lists(), previousSessions.filter(session => session.id !== id));
       }
 
       return { previousSessions };

@@ -11,6 +11,9 @@ interface CreateSuggestionContextType {
   saveProgress: () => Promise<void>;
   isLastStep: boolean;
   canProceed: boolean;
+  isSubmitting: boolean;
+  submissionError: string | null;
+  handleSubmissionError: (error: Error) => void;
 }
 
 const STORAGE_KEY = '@suggestion_form_draft';
@@ -26,6 +29,7 @@ const CreateSuggestionContext = createContext<CreateSuggestionContextType | null
 
 export const CreateSuggestionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [formState, setFormState] = React.useState<FormState>(initialFormState);
+  const [submissionError, setSubmissionError] = React.useState<string | null>(null);
 
   const saveProgress = useCallback(async () => {
     try {
@@ -76,6 +80,10 @@ export const CreateSuggestionProvider: React.FC<{ children: React.ReactNode }> =
     return formState.isValid;
   }, [formState.isValid]);
 
+  const handleSubmissionError = useCallback((error: Error) => {
+    setSubmissionError(error.message);
+  }, []);
+
   const value = useMemo(() => ({
     formState,
     setCurrentStep,
@@ -84,7 +92,10 @@ export const CreateSuggestionProvider: React.FC<{ children: React.ReactNode }> =
     saveProgress,
     isLastStep,
     canProceed,
-  }), [formState, setCurrentStep, updateFormData, resetForm, saveProgress, isLastStep, canProceed]);
+    isSubmitting: false,
+    submissionError,
+    handleSubmissionError,
+  }), [formState, setCurrentStep, updateFormData, resetForm, saveProgress, isLastStep, canProceed, submissionError, handleSubmissionError]);
 
   return (
     <CreateSuggestionContext.Provider value={value}>
