@@ -17,6 +17,7 @@ class SuggestionsApi {
    * Create a new hypnosis session
    */
   async createSession(data: CreateSessionDto): Promise<SessionResponse> {
+    console.log('data -----', data);
     return api.post(this.baseUrl, data);
   }
 

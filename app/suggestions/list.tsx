@@ -5,6 +5,9 @@ import { useGetSessions } from '@/services/queries/suggestions';
 export default function ListScreen() {
   const { data, isLoading, error } = useGetSessions();
 
+  console.log('data', data);
+  
+
   if (isLoading) {
     return (
       <View style={styles.container}>

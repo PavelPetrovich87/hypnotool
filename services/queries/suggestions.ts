@@ -51,12 +51,13 @@ export const useCreateSession = () => {
       await queryClient.cancelQueries({ queryKey: suggestionKeys.lists() });
 
       // Get current sessions as array
-      const previousSessions = queryClient.getQueryData<Session[]>(suggestionKeys.lists());
+      const previousSessions = queryClient.getQueryData<{data: Session[]}>(suggestionKeys.lists());
+      console.log('previousSessions', previousSessions);
       
       // Optimistically update with temporary session
-      if (previousSessions) {
+      if (previousSessions?.data.length) {
         queryClient.setQueryData<Session[]>(suggestionKeys.lists(), [
-          ...previousSessions,
+          ...previousSessions.data,
           {
             ...newSession,
             id: 'temp-id-' + Date.now(),
@@ -66,7 +67,7 @@ export const useCreateSession = () => {
         ]);
       }
 
-      return { previousSessions };
+      return { previousSessions: previousSessions?.data };
     },
     onError: (err, newSession, context) => {
       // Rollback on error
